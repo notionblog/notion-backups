@@ -6,6 +6,6 @@ workers_dev = true
 route = ""
 zone_id = ""
 compatibility_date = "2022-04-29"
-vars={EXPORT_TYPE="",LOCALE="", TIMEZONE=""}
+vars={EXPORT_TYPE="",LOCALE="", TIMEZONE="",SLACK_WEBHOOK="https://hooks.slack.com/services/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"}
 #[secrets]
 #TOKEN_V2

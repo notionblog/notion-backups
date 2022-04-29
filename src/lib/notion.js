@@ -1,3 +1,9 @@
+const _BASEURL = 'https://www.notion.so/api/v3'
+const _HEADERS = {
+  Cookie: `token_v2=${TOKEN_V2};`,
+  'Content-Type': 'application/json',
+}
+
 /**
  * Return list of available user workspaces
  *
@@ -5,12 +11,9 @@
  */
 
 const _getSpaces = async () => {
-  const res = await fetch('https://www.notion.so/api/v3/getSpaces', {
+  const res = await fetch(`${_BASEURL}/getSpaces`, {
     method: 'POST',
-    headers: {
-      Cookie: `token_v2=${TOKEN_V2};`,
-      'Content-Type': 'application/json',
-    },
+    headers: _HEADERS,
   })
   const data = await res.json()
   const userSpaces = data[Object.keys(data)[0]].space
@@ -42,13 +45,10 @@ const _setupExportTask = async spaceId => {
       },
     },
   }
-  const res = await fetch('https://www.notion.so/api/v3/enqueueTask', {
+  const res = await fetch(`${_BASEURL}/enqueueTask`, {
     method: 'POST',
     body: JSON.stringify(task),
-    headers: {
-      Cookie: `token_v2=${TOKEN_V2};`,
-      'Content-Type': 'application/json',
-    },
+    headers: _HEADERS,
   })
 
   const { taskId } = await res.json()
@@ -56,20 +56,17 @@ const _setupExportTask = async spaceId => {
 }
 
 /**
- * Check export task status
+ * Check the export task status
  *
  * @param {string} taskId id of the task
  * @return {object} status contains informations about the task progress
  */
 
 const _checkExportTask = async taskId => {
-  const res = await fetch('https://www.notion.so/api/v3/getTasks', {
+  const res = await fetch(`${_BASEURL}/getTasks`, {
     method: 'POST',
     body: JSON.stringify({ taskIds: [taskId] }),
-    headers: {
-      Cookie: `token_v2=${TOKEN_V2};`,
-      'Content-Type': 'application/json',
-    },
+    headers: _HEADERS,
   })
   const data = await res.json()
 
@@ -77,7 +74,7 @@ const _checkExportTask = async taskId => {
 }
 
 /**
- *  Check the task status every 5s, and then resolve the export data after the process is finished.
+ *  Check the task status every 5s, then resolve the export data after the process is finished.
  *
  * @param {object} space object contains name and id
  * @return {string} export url
@@ -115,7 +112,7 @@ const _exportSpace = space => {
  */
 
 export const exportWorkspaces = async () => {
-  const spaces = await _getSpaces()
+  let spaces = await _getSpaces()
   const tasks = spaces.map(space => _exportSpace(space))
   return Promise.allSettled(tasks)
 }

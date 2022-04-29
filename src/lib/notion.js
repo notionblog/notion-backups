@@ -4,7 +4,7 @@
  * @return {Array} arrray of spaces with name and id
  */
 
-const _getSpaces = async () => {
+export const _getSpaces = async () => {
   const res = await fetch('https://www.notion.so/api/v3/getSpaces', {
     method: 'POST',
     headers: {
@@ -37,7 +37,7 @@ const _setupExportTask = async spaceId => {
         exportOptions: {
           exportType: EXPORT_TYPE || 'html',
           timeZone: TIMEZONE || 'Etc/UTC',
-          locale: 'en',
+          locale: LOCALE || 'en',
         },
       },
     },
@@ -46,10 +46,11 @@ const _setupExportTask = async spaceId => {
     method: 'POST',
     body: JSON.stringify(task),
     headers: {
-      Cookie: `token_v2=${TOKEN};`,
+      Cookie: `token_v2=${TOKEN_V2};`,
       'Content-Type': 'application/json',
     },
   })
+
   const { taskId } = await res.json()
   return taskId
 }
@@ -66,11 +67,49 @@ const _checkExportTask = async taskId => {
     method: 'POST',
     body: JSON.stringify({ taskIds: [taskId] }),
     headers: {
-      Cookie: `token_v2=${TOKEN};`,
+      Cookie: `token_v2=${TOKEN_V2};`,
       'Content-Type': 'application/json',
     },
   })
   const data = await res.json()
 
   return data.results[0].status
+}
+
+/**
+ *  Check the task status every 5s, and then resolve the export data after the process is finished.
+ *
+ * @param {object} space object contains name and id
+ * @return {string} export url
+ * @throws {string} error message
+ */
+const _exportSpace = space => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const taskId = await _setupExportTask(space.id)
+
+      const check = setInterval(async () => {
+        const taskStatus = await _checkExportTask(taskId)
+        if (!taskStatus) {
+          clearInterval(check)
+          reject(new Error('Failed to export the workspace'))
+        } else if (taskStatus.type === 'complete') {
+          clearInterval(check)
+          const data = {
+            ...space,
+            url: taskStatus.exportURL,
+          }
+          resolve(data)
+        }
+      }, 5000)
+    } catch (err) {
+      reject(new Error('Something went wrong'))
+    }
+  })
+}
+
+export const test = async () => {
+  const space = { id: '8fe67e7e-b968-4da7-a2b6-e474ee81beb5', name: 'fdsf' }
+
+  return await _exportSpace(space)
 }

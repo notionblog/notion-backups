@@ -6,5 +6,6 @@ workers_dev = true
 route = ""
 zone_id = ""
 compatibility_date = "2022-04-29"
+vars={EXPORT_TYPE="",LOCALE="", TIMEZONE="",SPACEID="e8a0c40f-4c66-4683-880b-6e626bb8dd90"}
 #[secrets]
 #TOKEN_V2

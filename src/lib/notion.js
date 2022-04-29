@@ -4,7 +4,7 @@
  * @return {Array} arrray of spaces with name and id
  */
 
-export const _getSpaces = async () => {
+const _getSpaces = async () => {
   const res = await fetch('https://www.notion.so/api/v3/getSpaces', {
     method: 'POST',
     headers: {
@@ -108,8 +108,14 @@ const _exportSpace = space => {
   })
 }
 
-export const test = async () => {
-  const space = { id: '8fe67e7e-b968-4da7-a2b6-e474ee81beb5', name: 'fdsf' }
+/**
+ * Export all user workspaces
+ *
+ * @return {Array} arrray of the status and values of all spaces export
+ */
 
-  return await _exportSpace(space)
+export const exportWorkspaces = async () => {
+  const spaces = await _getSpaces()
+  const tasks = spaces.map(space => _exportSpace(space))
+  return Promise.allSettled(tasks)
 }

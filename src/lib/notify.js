@@ -1,3 +1,9 @@
+const _exportTime = () => {
+  const today = new Date()
+  return `${today.getFullYear()}-${today.getMonth() +
+    1}-${today.getDate()} -- ${today.getHours()}:${today.getMinutes()}`
+}
+
 /*
  *  Convert an export task to a slack message block
  *
@@ -10,8 +16,8 @@ const _slackBlock = task => ({
     type: 'mrkdwn',
     text:
       task.status === 'fulfilled'
-        ? '✅ *Success*: ' + task.value.name + ' workspace'
-        : '❌ *Failed*:' + task.reason,
+        ? task.value.name + ' workspace' + ' `✅ Success`'
+        : task.reason + ' `❌ Failed`',
   },
   accessory: {
     type: 'button',
@@ -34,25 +40,13 @@ const _slackBlock = task => ({
  * @param {Array} array of export tasks
  */
 const _slack = async tasks => {
-  const today = new Date()
-  const date =
-    today.getFullYear() +
-    '-' +
-    (today.getMonth() + 1) +
-    '-' +
-    today.getDate() +
-    ' . ' +
-    today.getHours() +
-    ':' +
-    today.getMinutes()
-
   const content = {
     blocks: [
       {
         type: 'header',
         text: {
           type: 'plain_text',
-          text: `💾 Backup: ${date}`,
+          text: `💾 Backup: ${_exportTime()}`,
           emoji: true,
         },
       },
@@ -75,6 +69,42 @@ const _slack = async tasks => {
 }
 
 /*
+ *  Send Notification via Discord
+ *
+ * @param {Array} array of export tasks
+ */
+const _discord = async tasks => {
+  const content = {
+    username: 'Notion Backups',
+    content: `> 💾 **Backup: ${_exportTime()}**`,
+    embeds: [
+      ...tasks.map(task => ({
+        color: 11730954,
+        author: {
+          name:
+            task.status === 'fulfilled'
+              ? task.value.name + ' workspace'
+              : '❌ Failed: ' + task.reason,
+        },
+        title: 'Download',
+        url:
+          task.status === 'fulfilled'
+            ? task.value.url
+            : 'https://youtu.be/dQw4w9WgXcQ',
+      })),
+    ],
+  }
+
+  await fetch(DISCORD_WEBHOOK, {
+    method: 'POST',
+    body: JSON.stringify(content),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
+
+/*
  *  Send Notifications to the users selected channel
  *
  * @param {Array} array of export tasks
@@ -82,10 +112,12 @@ const _slack = async tasks => {
  */
 export const notify = async (tasks, channel) => {
   try {
-    console.log('tasks: ', JSON.stringify(tasks))
     switch (channel) {
       case 'slack':
         return await _slack(tasks)
+      case 'discord':
+        console.log('sending via discord')
+        return await _discord(tasks)
     }
   } catch (err) {
     throw new Error('failed to send notification')

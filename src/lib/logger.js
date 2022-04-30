@@ -34,14 +34,10 @@ const _discord = async msg => {
   })
 }
 
-export const logger = async (msg, channel) => {
+export const logger = async msg => {
   try {
-    switch (channel) {
-      case 'slack':
-        return await _slack(msg)
-      case 'discord':
-        return await _discord(msg)
-    }
+    if (typeof SLACK_WEBHOOK !== 'undefined') await _slack(msg)
+    if (typeof DISCORD_WEBHOOK !== 'undefined') await _discord(msg)
   } catch (err) {
     console.error(err)
     throw new Error('failed to send notification')

@@ -105,20 +105,15 @@ const _discord = async tasks => {
 }
 
 /*
- *  Send Notifications to the users selected channel
+ *  Send Notifications to the users selected channels
  *
  * @param {Array} array of export tasks
  * @param ${string} channel name
  */
-export const notify = async (tasks, channel) => {
+export const notify = async tasks => {
   try {
-    switch (channel) {
-      case 'slack':
-        return await _slack(tasks)
-      case 'discord':
-        console.log('sending via discord')
-        return await _discord(tasks)
-    }
+    if (typeof SLACK_WEBHOOK !== 'undefined') await _slack(tasks)
+    if (typeof DISCORD_WEBHOOK !== 'undefined') await _discord(tasks)
   } catch (err) {
     console.error(err)
     throw new Error('failed to send notification')

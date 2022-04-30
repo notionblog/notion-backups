@@ -100,6 +100,7 @@ const _exportSpace = space => {
         }
       }, 5000)
     } catch (err) {
+      console.error(err)
       reject(new Error('Something went wrong'))
     }
   })

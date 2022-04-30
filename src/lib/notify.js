@@ -79,7 +79,7 @@ const _discord = async tasks => {
     content: `> 💾 **Backup: ${_exportTime()}**`,
     embeds: [
       ...tasks.map(task => ({
-        color: 11730954,
+        color: 5763719,
         author: {
           name:
             task.status === 'fulfilled'
@@ -120,6 +120,7 @@ export const notify = async (tasks, channel) => {
         return await _discord(tasks)
     }
   } catch (err) {
+    console.error(err)
     throw new Error('failed to send notification')
   }
 }

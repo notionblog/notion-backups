@@ -1,6 +1,6 @@
 const _BASEURL = 'https://www.notion.so/api/v3'
 const _HEADERS = {
-  Cookie: `token_v2=${TOKEN_V2};`,
+  Cookie: `token_v2=${typeof TOKEN_V2 !== undefined ? TOKEN_V2 : ''};`,
   'Content-Type': 'application/json',
 }
 

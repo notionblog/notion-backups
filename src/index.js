@@ -8,6 +8,7 @@ addEventListener('scheduled', event => {
 })
 
 async function handleRequest(request) {
-  // await triggerExport()
+  const { pathname } = new URL(request.url)
+  if (pathname === '/test') await triggerExport()
   return new Response('OK', { status: 200 })
 }

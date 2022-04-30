@@ -6,12 +6,10 @@ workers_dev = true
 route = ""
 zone_id = ""
 compatibility_date = "2022-04-29"
-[triggers]
-crons = ["* * * * *"]
-#[secrets]
-#TOKEN_V2
-#SLACK_WEBHOOK
-#DISCORD_WEBHOOK
-#EXPORT_TYPE
-#LOCALE
-#TIMEZONE
+# [secrets]
+# TOKEN_V2
+# SLACK_WEBHOOK
+# DISCORD_WEBHOOK
+# EXPORT_TYPE
+# LOCALE
+# TIMEZONE

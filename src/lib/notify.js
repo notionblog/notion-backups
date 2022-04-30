@@ -34,8 +34,36 @@ const _slackBlock = task => ({
  * @param {Array} array of export tasks
  */
 const _slack = async tasks => {
+  const today = new Date()
+  const date =
+    today.getFullYear() +
+    '-' +
+    (today.getMonth() + 1) +
+    '-' +
+    today.getDate() +
+    ' . ' +
+    today.getHours() +
+    ':' +
+    today.getMinutes()
+
   const content = {
-    blocks: tasks.map(task => _slackBlock(task)),
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: `💾 Backup: ${date}`,
+          emoji: true,
+        },
+      },
+      {
+        type: 'divider',
+      },
+      ...tasks.map(task => _slackBlock(task)),
+      {
+        type: 'divider',
+      },
+    ],
   }
   await fetch(SLACK_WEBHOOK, {
     method: 'POST',

@@ -89,7 +89,7 @@ const _exportSpace = space => {
         const taskStatus = await _checkExportTask(taskId)
         if (!taskStatus) {
           clearInterval(check)
-          reject(new Error('Failed to export the workspace'))
+          reject(new Error(`Failed to export ${space.name} workspace`))
         } else if (taskStatus.type === 'complete') {
           clearInterval(check)
           const data = {
@@ -100,7 +100,7 @@ const _exportSpace = space => {
         }
       }, 5000)
     } catch (err) {
-      reject(new Error('Something went wrong' + err))
+      reject(new Error('Something went wrong'))
     }
   })
 }

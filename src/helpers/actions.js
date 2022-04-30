@@ -8,6 +8,9 @@ import { logger } from '../lib/logger'
  */
 export const triggerExport = async () => {
   try {
+    // check if token is set
+    if (typeof TOKEN_V2 === undefined) return
+
     // Notify the user that process has started
     const msg = `📡 *log*: starting the backup process\n`
     await logger(msg)

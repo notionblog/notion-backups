@@ -8,6 +8,6 @@ addEventListener('scheduled', event => {
 })
 
 async function handleRequest(request) {
-  await triggerExport()
+  // await triggerExport()
   return new Response('OK', { status: 200 })
 }

@@ -1,14 +1,13 @@
-import { exportWorkspaces } from './lib/notion'
-import { notify } from './lib/notify'
+import { triggerExport } from './helpers/actions'
 
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
+addEventListener('scheduled', event => {
+  event.waitUntil(triggerExport())
+})
 
 async function handleRequest(request) {
-  const tasks = await exportWorkspaces()
-  await notify(tasks, 'slack')
-  return new Response(JSON.stringify(tasks), {
-    headers: { 'content-type': 'application/json' },
-  })
+  await triggerExport()
+  return new Response('OK', { status: 200 })
 }

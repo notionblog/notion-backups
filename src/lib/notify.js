@@ -11,7 +11,7 @@ const _slackBlock = task => ({
     text:
       task.status === 'fulfilled'
         ? '✅ *Success*: ' + task.value.name + ' workspace'
-        : '❌ *Failed*:' + task.value.name + ' workspace',
+        : '❌ *Failed*:' + task.reason,
   },
   accessory: {
     type: 'button',
@@ -54,6 +54,7 @@ const _slack = async tasks => {
  */
 export const notify = async (tasks, channel) => {
   try {
+    console.log('tasks: ', JSON.stringify(tasks))
     switch (channel) {
       case 'slack':
         return await _slack(tasks)

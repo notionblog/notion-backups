@@ -38,9 +38,9 @@ const _setupExportTask = async spaceId => {
       request: {
         spaceId,
         exportOptions: {
-          exportType: EXPORT_TYPE || 'html',
-          timeZone: TIMEZONE || 'Etc/UTC',
-          locale: LOCALE || 'en',
+          exportType: typeof EXPORT_TYPE !== 'undefined' ? EXPORT_TYPE : 'html',
+          timeZone: typeof TIMEZONE !== 'undefined' ? TIMEZONE : 'Etc/UTC',
+          locale: typeof LOCALE !== 'undefined' ? LOCALE : 'en',
         },
       },
     },
@@ -100,7 +100,7 @@ const _exportSpace = space => {
         }
       }, 5000)
     } catch (err) {
-      reject(new Error('Something went wrong'))
+      reject(new Error('Something went wrong' + err))
     }
   })
 }

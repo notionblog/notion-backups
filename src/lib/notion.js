@@ -1,6 +1,8 @@
+const secret = globalThis.TOKEN_V2
+
 const _BASEURL = 'https://www.notion.so/api/v3'
 const _HEADERS = {
-  Cookie: `token_v2=${typeof TOKEN_V2 !== undefined ? TOKEN_V2 : ''};`,
+  Cookie: `token_v2=${typeof secret !== undefined ? secret : ''};`,
   'Content-Type': 'application/json',
 }
 

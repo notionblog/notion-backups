@@ -17,7 +17,7 @@ Set up automated backups for your Notion workspaces that run on a time-basis and
 2. Give your script a name and then click the 'create service' button.
    ![Step 2](./assets/guide_2.png)
 
-3. Click on the `Quick edit` button and Copy-paste the script code from here into the editor.
+3. Click on the `Quick edit` button and Copy-paste the [Script code](https://raw.githubusercontent.com/notionblog/notion-backups/master/dist/worker.js?) into the editor.
    ![Step 3](./assets/guide_3.png)
 
 4. Follow this [guide](https://www.notion.so/Find-Your-Notion-Token-5da17a8df27a4fb290e9e3b5d9ba89c4) to find your Notion token v2.

@@ -48,9 +48,9 @@ Set up automated backups for your Notion workspaces that run on a time-basis and
    `0 0 1 * *` will cause the script to run on a monthly basis.
    ![Step 8](./assets/guide_8.png)
 
-## Change export type to `Markdown`
+## Change export format to `Markdown`
 
-To change the backup's export format from html to markdown or PDF (enterprise plan), create a new environment variable called EXPORT TYPE and set its value to `html` or `markdown`.
+To change the backup's export format from html to markdown or PDF (enterprise plan), create a new environment variable called `EXPORT_TYPE` and set its value to `html` or `markdown`.
 
 ## Guides
 

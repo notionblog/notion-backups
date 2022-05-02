@@ -15,21 +15,67 @@
         justify-content: center;
       }
       .description {
-        padding: 13px 40px;
-        box-shadow: 0px 0px 10px 10px #f2fff2;
-        color: rgb(0 122 40 / 32%);
-        background-color: #045b001a;
-        font-size: 24pt;
+        padding: 40px;
+        font-size: 18pt;
         border: 1px solid;
         border-radius: 13px;
         font-family: system-ui;
+      }
+      .code {
+        color: #ff2121;
+        background-color: gainsboro;
+        padding: 5px;
+        border-radius: 3px;
+        font-size: 18px;
+      }
+      li {
+        line-height: 44px;
+      }
+      button {
+        padding: 15px;
+        font-size: 20px;
+        margin-top: 15px;
+        background-color: black;
+        color: white;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+      }
+      button:hover {
+        opacity: 0.8;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="description">
-        The script is running!
+        <span>✅ It's all right!</span><br /><br />
+
+        To manually test the script, click this button.
+        <br />
+        <button>☁️ Trigger Export</button>
+        <p>
+          in order for the script to execute on a time-based, you must create
+          <br />a cron job task for it, Navigate to
+          <b> Worker > Triggers > Cron Triggers</b><br />
+          and add a new cron trigger
+        </p>
+        Examples:
+        <ul>
+          <li>
+            <span class="code">0 0 * * *</span> will cause the script to execute
+            once everyday.
+          </li>
+          <li>
+            <span class="code">0 0 */10 * *</span> will cause the script to
+            execute once every ten days.
+          </li>
+          <li>
+            <span class="code">0 0 1 * *</span> will cause the script to run on
+            a monthly basis.
+          </li>
+        </ul>
       </div>
     </div>
   </body>

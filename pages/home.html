@@ -34,7 +34,7 @@
       button {
         padding: 15px;
         font-size: 20px;
-        margin-top: 15px;
+        margin: 15px 0px;
         background-color: black;
         color: white;
         border: none;
@@ -45,6 +45,12 @@
         opacity: 0.8;
         cursor: pointer;
       }
+      .success {
+        color: green;
+      }
+      .failure {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -54,7 +60,10 @@
 
         To manually test the script, click this button.
         <br />
-        <button>☁️ Trigger Export</button>
+        <div class="actions">
+          <button id="trigger">☁️ Trigger Export</button>
+          <div class="responses"></div>
+        </div>
         <p>
           in order for the script to execute on a time-based, you must create
           <br />a cron job task for it, Navigate to
@@ -78,5 +87,26 @@
         </ul>
       </div>
     </div>
+    <script>
+      window.onload = () => {
+        const btn = document.querySelector('#trigger')
+        const triggerScript = async () => {
+          const responses = document.querySelector('.responses')
+          responses.innerHTML = ''
+          const span = document.createElement('SPAN')
+          const res = await fetch('/test')
+          if (res.ok) {
+            span.classList.add('success')
+            span.innerText = 'Success! started exporting your workspaces...'
+          } else {
+            span.classList.add('failure')
+            span.innerText =
+              'Unable to start the script, please activate the test mode.'
+          }
+          responses.appendChild(span)
+        }
+        btn.addEventListener('click', triggerScript)
+      }
+    </script>
   </body>
 </html>

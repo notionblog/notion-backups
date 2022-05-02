@@ -15,21 +15,51 @@
         justify-content: center;
       }
       .description {
-        padding: 13px 40px;
-        box-shadow: 0px 0px 10px 10px #ffeaea;
-        color: rgba(191, 0, 0, 0.319);
-        background-color: #ff00001a;
-        font-size: 24pt;
+        padding: 40px;
+        font-size: 18pt;
         border: 1px solid;
         border-radius: 13px;
         font-family: system-ui;
+      }
+      .code {
+        color: #ff2121;
+        background-color: gainsboro;
+        padding: 5px;
+        border-radius: 3px;
+        font-size: 18px;
+      }
+      li {
+        line-height: 44px;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="description">
-        TOKEN_V2 is required
+        <span>Congrats 🥳 The script has been successfully deployed!</span
+        ><br /><br />
+        Next Steps:
+        <ol>
+          <li>Follow this guide to find your Notion token_v2.</li>
+          <li>
+            Navigate to your <b>Worker > Settings > Variables </b>and add the
+            following secrets:
+            <ul>
+              <li>
+                <span class="code">TOKEN_V2</span> paste the value of your
+                Notion token (<b>required</b>)
+              </li>
+              <li>
+                <span class="code">SLACK_WEBHOOK</span> paste your Slack webhook
+                URL (optional)
+              </li>
+              <li>
+                <span class="code">DISCORD_WEBHOOK</span> paste your Discord
+                webhook URL (optional)
+              </li>
+            </ul>
+          </li>
+        </ol>
       </div>
     </div>
   </body>

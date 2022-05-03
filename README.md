@@ -4,6 +4,9 @@ Set up automated backups for your Notion workspaces that run on a time-basis and
 
 ![Cover](./assets/light.png)
 
+## Warning
+⚠️ This tool uses the Notion unofficial API, which means it could break at any time. I'll try my best to keep it up to date, but you should be aware of this.
+
 ## Pre-requisites
 
 - A Free [Cloudflare workers](https://dash.cloudflare.com/sign-up) account
